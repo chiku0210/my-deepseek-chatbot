@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface MessageInputProps {
   input: string;
@@ -9,12 +9,27 @@ interface MessageInputProps {
 const MessageInput: React.FC<MessageInputProps> = ({ input, setInput, sendMessage }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+    }
+  }, [input]);
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto';
+      inputRef.current.style.height = `${Math.min(inputRef.current.scrollHeight, 9)}rem`; // 6 lines at 1.5rem line height
+    }
+  };
+
   return (
     <div className="flex items-center gap-2 mt-4">
       <textarea
         ref={inputRef}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={handleInput}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -24,7 +39,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ input, setInput, sendMessag
         className="flex-1 p-3 border rounded-md bg-gray-700 text-white border-gray-600 placeholder-gray-500 resize-none overflow-hidden"
         placeholder="Type your message..."
         rows={1}
-        style={{ maxHeight: '6rem' }} // 4 lines at 1.5rem line height
+        style={{ maxHeight: '9rem' }} // 6 lines at 1.5rem line height
       />
       <button
         onClick={sendMessage}

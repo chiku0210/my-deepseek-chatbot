@@ -79,7 +79,7 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-screen max-w-lg mx-auto p-6 border border-gray-700 shadow-lg rounded-md bg-gradient-to-r from-gray-800 to-gray-900 text-white">
       <Header />
-      <MessageList messages={messages} isLoading={isLoading} chatRef={chatRef} />
+      <MessageList messages={messages} isLoading={isLoading} chatRef={chatRef} hasSentFirstMessage={hasSentFirstMessage} />
       <MessageInput input={input} setInput={setInput} sendMessage={sendMessage} />
     </div>
   );
