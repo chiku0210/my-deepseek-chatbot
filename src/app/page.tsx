@@ -93,7 +93,7 @@ export default function Chat() {
         )}
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div className={`p-3 rounded-lg max-w-[75%] relative ${msg.role === "user" ? "bg-blue-600 text-white" : "bg-gray-700 text-white"}`}>
+            <div className={`relative p-4 max-w-[75%] ${msg.role === "user" ? "bg-blue-600 text-white rounded-bl-3xl rounded-tl-3xl rounded-tr-md" : "bg-gray-700 text-white rounded-br-3xl rounded-tr-3xl rounded-tl-md"}`}>
               {msg.thinking && msg.thinking.trim() && (
                 <div className="text-sm text-gray-400 mb-1">
                   <strong>Bot's thoughts:</strong> {msg.thinking}
